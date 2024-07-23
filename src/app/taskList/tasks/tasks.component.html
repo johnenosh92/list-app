@@ -1,7 +1,7 @@
 <h1>List of Tasks</h1>
 
 <div class="container">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox (change)="$event ? toggleAllRows() : null"
