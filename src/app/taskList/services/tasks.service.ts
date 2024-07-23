@@ -12,28 +12,26 @@ export interface TasksList {
 })
 
 export class TasksService {
-  
-taskData: TasksList[] = [
-  {taskID:1, taskTitle:"Login to",taskDetails:"Login to the portal manually"},
-  {taskID:2, taskTitle:"Tasks for the day",taskDetails:"Work on your tasks assigned"},
-  {taskID:3, taskTitle:"Log off",taskDetails:"Log off from the portal manually"}
-];
+  taskDataBackup: TasksList[] = [
+    {taskID:1, taskTitle:"Check for Emails",taskDetails:"Check for any new emails you need to respond"},
+    {taskID:2, taskTitle:"Tasks for the day",taskDetails:"Check for tasks that have been assigned for the day"},
+    {taskID:3, taskTitle:"Attend meetings",taskDetails:"Check for meetings being scheduled and attend them"}
+  ];
+
+  taskData: TasksList[] = [
+    {taskID:1, taskTitle:"Check for Emails",taskDetails:"Check for any new emails you need to respond"},
+    {taskID:2, taskTitle:"Tasks for the day",taskDetails:"Check for tasks that have been assigned for the day"},
+    {taskID:3, taskTitle:"Attend meetings",taskDetails:"Check for meetings being scheduled and attend them"}
+  ];
   editIndex: number;
+  //set tasks list data in local storage and local variable
   updateTasks(taskList:TasksList[]) {
     localStorage.setItem("tasks", JSON.stringify(taskList));
     this.taskData = taskList;
   }
-
+  //get tasks from local storage
   getTasksList(): any {
     const item = localStorage.getItem("tasks");
     return item ? JSON.parse(item) : null;
-  }
-
-  removeItem(key: string) {
-    localStorage.removeItem(key);
-  }
-
-  clear() {
-    localStorage.clear();
   }
 }

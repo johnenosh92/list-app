@@ -1,25 +1,23 @@
 <h1>{{pageTitle}}</h1>
-
 <div class="container">
-<form [formGroup]="myForm" (ngSubmit)="submitForm()">
-<mat-form-field>
-    <mat-label>Title</mat-label>
-    <input matInput formControlName="taskTitle" placeholder="Enter the taskTitle">
-    <mat-error *ngIf="myForm.get('taskTitle').invalid && (myForm.get('taskTitle').dirty || myForm.get('taskTitle').touched)">
-        <span *ngIf="myForm.get('taskTitle').errors.required">taskTitle is required.</span>
-      </mat-error>
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-    <mat-label>Details</mat-label>
-    <input matInput formControlName="taskDetails" placeholder="Enter the Details">
-    <mat-error *ngIf="myForm.get('taskDetails').invalid && (myForm.get('taskDetails').dirty || myForm.get('taskDetails').touched)">
-        <span *ngIf="myForm.get('taskDetails').errors.required">Details is required.</span>
-      </mat-error>
-  </mat-form-field>
-  <br>
-  <button mat-raised-button color="primary" type="submit" [disabled]="myForm.invalid">Save</button>
-
-</form>
+  <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="taskTitle" placeholder="Enter the taskTitle">
+      <mat-error *ngIf="myForm.get('taskTitle').invalid && (myForm.get('taskTitle').dirty || myForm.get('taskTitle').touched)">
+          <span *ngIf="myForm.get('taskTitle').errors.required">taskTitle is required.</span>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Details</mat-label>
+      <input matInput formControlName="taskDetails" placeholder="Enter the Details">
+      <mat-error *ngIf="myForm.get('taskDetails').invalid && (myForm.get('taskDetails').dirty || myForm.get('taskDetails').touched)">
+          <span *ngIf="myForm.get('taskDetails').errors.required">Details is required.</span>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" type="submit" [disabled]="myForm.invalid">Save</button>
+  </form>
 </div>
   

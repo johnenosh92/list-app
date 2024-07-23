@@ -10,14 +10,26 @@ h1 {
     display: table-cell;
     max-width: 600px;
   }
+
+.button-row .mat-mdc-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.add-task-button {
+  float: right;
+}
+
+.container {
+  width: 60%;
+  margin: auto;
+}
+
+
+button {
+  margin-right: 5px;
+}
+
+button.deleteSelected {
+  color: rgb(67, 84, 160);
+}
   
-  .button-row .mat-mdc-button-base {
-    margin: 8px 8px 8px 0;
-  }
-  .add-task-button {
-    float: right;
-  }
-  .container {
-    width: 60%;
-    margin: auto;
-  }
