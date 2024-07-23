@@ -1,6 +1,6 @@
 import {SelectionModel} from '@angular/cdk/collections';
-import {Component, OnInit} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { TasksService } from '../services/tasks.service';
 import { TasksList } from '../services/tasks.service';
 import { Router } from '@angular/router';
@@ -15,6 +15,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./tasks.component.scss']
 })
 export class TasksComponent implements OnInit {
+  @ViewChild(MatTable) table: MatTable<any>;
+
   displayedColumns: string[] = ['select', 'taskTitle', 'actions'];
   dataSource = new MatTableDataSource<TasksList>();
   selection = new SelectionModel<TasksList>(true, []);
@@ -71,7 +73,22 @@ export class TasksComponent implements OnInit {
     currentData.splice(taskIndex, 1);
     this.dataSource.data = currentData;
     this.tasksService.updateTasks(this.dataSource.data);
-    this.selection.clear;
+    this.clearSelections();
+  }
+  //clear tasks selections funtion
+  clearSelections() {
+    this.selection.clear();
+    this.updateHeaderCheckbox();
+  }
+  //clear header selection
+  updateHeaderCheckbox() {
+    setTimeout(() => {
+      const headerCheckbox = this.table["_headerRowDef"].headerRowContainer._headerRow._checkbox;
+      if (headerCheckbox) {
+        headerCheckbox.checked = false;
+        headerCheckbox.indeterminate = false;
+      }
+    });
   }
   //routes to add/edit page
   addTask() {
@@ -81,7 +98,7 @@ export class TasksComponent implements OnInit {
   resetTasks(){
     this.tasksService.updateTasks(this.tasksService.taskDataBackup);
     this.dataSource.data = this.tasksService.taskDataBackup.slice();
-    this.selection.clear;
+    this.clearSelections();
   }
   //open delete confirmation dialogue box
   openConfirmation(i) {
@@ -110,7 +127,7 @@ export class TasksComponent implements OnInit {
   deleteSelected() {
     this.selection.selected.forEach(sel => {
       this.onDelete(this.getTaskIndex(sel));
-    })
+    });
   }
   //find a seleted task and return index
   getTaskIndex(task:TasksList) {
