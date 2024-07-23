@@ -1,0 +1,71 @@
+<h1>List of Tasks</h1>
+
+<div class="container">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    [aria-label]="checkboxLabel()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="taskID">
+    <th mat-header-cell *matHeaderCellDef> Task ID </th>
+    <td mat-cell *matCellDef="let element"> {{element.taskID}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="taskTitle">
+    <th mat-header-cell *matHeaderCellDef> Task </th>
+    <td mat-cell *matCellDef="let element"> {{element.taskTitle}} 
+      <br>
+      <span class="taskDetails">{{element.taskDetails}}</span>
+     </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Actions 
+      <button mat-button (click)="openMultipleConfirmation()" *ngIf="selectedTasks().length > 0">Delete Selected</button>
+    </th>
+    <td mat-cell *matCellDef="let element; let i = index;"> 
+      <div class="button-row">
+        <button mat-button (click)="onEdit(i)">Edit</button>
+        <button mat-button (click)="openConfirmation(i)">Delete</button>
+      </div>      
+
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      (click)="selection.toggle(row)">
+  </tr>
+</table>
+<br>
+<br>
+<button mat-stroked-button (click)="addTask()" class="add-task-button">Add Task</button>
+
+</div>
+
+<app-confirmation-dialog
+  *ngIf="showConfirmation"
+  [message]="'Are you sure you want to delete this task?'"
+  (confirmed)="onDeleteConfirmed($event)">
+</app-confirmation-dialog>
+
+<app-confirmation-dialog
+  *ngIf="showMultipleConfirmation"
+  [message]="'Are you sure you want to delete the tasks?'"
+  (confirmed)="onDeleteMultipleConfirmed($event)">
+</app-confirmation-dialog>
